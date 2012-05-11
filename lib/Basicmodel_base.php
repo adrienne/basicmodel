@@ -11,7 +11,7 @@ class Basicmodel_base extends Basicmodel
 {
     
     # Contains collected properties from the database
-    protected $properties;
+    protected $attributes;
     
     # public __construct();
     # ---------------------
@@ -22,32 +22,33 @@ class Basicmodel_base extends Basicmodel
     public function __construct()
     {
         parent::__construct();
-        $this->properties = $this->get_model_properties();
+        $this->attributes = $this->get_model_attributes();
+        echo "<pre>"; print_r($this->properties); echo "</pre>";
     }
     
-    # public get_model_properties();
+    # public get_model_attributes();
     # ------------------------------
     #
     # Gets model's properties. If model name is passed, will use that, otherwise, will
     # use current class name.
     #
-    public function get_model_properties($name = '')
+    public function get_model_attributes($name = '')
     {
-        if (empty($name) AND !empty($this->properties))
+        if (empty($name) AND !empty($this->attributes))
         {
-            return $this->properties;
+            return $this->attributes;
         }
         
-        return $this->_get_model_properties($name);
+        return $this->_get_model_attributes($name);
     }
     
-    # private _get_model_properties();
+    # private _get_model_attributes();
     # --------------------------------
     #
     # Returns an array containing model's properties. Properties come from the database
     # columns.
     #
-    private function _get_model_properties($name)
+    private function _get_model_attributes($name)
     {
         $name = $this->_make_db_name($name);
         return $this->_get_table_struct($name);
