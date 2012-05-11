@@ -39,9 +39,12 @@
 #    endforeach;
 #
 
-class Basicmodel
+class Basicmodel extends CI_Model
 {
     
-    
+    function __construct()
+    {
+        echo "<pre>"; print_r('Congrats! Basicmodel has been loaded.'); echo "</pre>";
+    }
     
 }
