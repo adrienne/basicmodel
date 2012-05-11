@@ -5,12 +5,10 @@
 #     (c) 2012 Mindaugas Bujanauskas, Apollo Music Aps
 #
 
-#
 # Basic Model is a class for CodeIgniter that simplifies and automates your workflow when
 # working with your data models in CodeIgniter.
 #
 
-#
 # In your model:
 #
 #    class Mymodel extends Basicmodel
@@ -39,12 +37,24 @@
 #    endforeach;
 #
 
-class Basicmodel extends CI_Model
+# Notes and todos
+# ---------------
+#
+# Hitting database each time to lookup model structure and verify that the table exists is slow.
+# Should implement caching instead.
+#
+
+# Basicmodel
+# ----------
+#
+# This class should be either loaded or loaded in controller where you want to use Basicmodel.
+# It makes **Basicmodel_base** available to your models.
+#
+# When you instantiate your models, it returns **Basicmodel_model** instance.
+#
+class Basicmodel
 {
     
-    function __construct()
-    {
-        echo "<pre>"; print_r('Congrats! Basicmodel has been loaded.'); echo "</pre>";
-    }
+    
     
 }
