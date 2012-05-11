@@ -55,15 +55,16 @@
 class Basicmodel extends CI_Model
 {
     # Contains path to this file
-    protected $path;
+    private $path;
     
-    # Loads **Basicmodel_base** and **Basicmodel_model** classes
+    # Loads config, **Basicmodel_base** and **Basicmodel_model** classes
     public function __construct()
     {
         parent::__construct();
         $this->path = rtrim(dirname(__FILE__), '/').'/';
         require_once($this->path.'lib/Basicmodel_base.php');
         require_once($this->path.'lib/Basicmodel_model.php');
+        $this->config->load('basicmodel', FALSE, TRUE);
     }
     
 }
