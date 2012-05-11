@@ -10,6 +10,27 @@
 class Basicmodel_model extends Basicmodel
 {
     
+    # public save();
+    # -------
+    #
+    # Saves model.
+    #
+    public function save()
+    {
+        if ($this->is_new())
+        {
+            return $this;
+        }
+    }
     
+    # public is_new();
+    # ----------------
+    #
+    # Returns `true` if the model has not been persisted or `false` otherwise.
+    #
+    public function is_new()
+    {
+        return true;
+    }
     
 }
