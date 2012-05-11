@@ -23,7 +23,6 @@ class Basicmodel_base extends Basicmodel
     {
         parent::__construct();
         $this->attributes = $this->get_model_attributes();
-        echo "<pre>"; print_r($this->properties); echo "</pre>";
     }
     
     # public get_model_attributes();
