@@ -19,7 +19,7 @@
 # In your controller:
 #
 #    $this->load->model('mymodel_model', 'mymodel');
-#    $mymodel = $this->mymodel->new();
+#    $mymodel = $this->mymodel->make();
 #    $mymodel->name = 'My name';
 #    $mymodel->save();
 #
@@ -54,16 +54,14 @@
 #
 class Basicmodel extends CI_Model
 {
-    # Contains path to this file
-    private $path;
     
     # Loads config, **Basicmodel_base** and **Basicmodel_model** classes
     public function __construct()
     {
         parent::__construct();
-        $this->path = rtrim(dirname(__FILE__), '/').'/';
-        require_once($this->path.'lib/Basicmodel_base.php');
-        require_once($this->path.'lib/Basicmodel_model.php');
+        $path = rtrim(dirname(__FILE__), '/').'/';
+        require_once($path.'lib/Basicmodel_base.php');
+        require_once($path.'lib/Basicmodel_model.php');
         $this->config->load('basicmodel', FALSE, TRUE);
     }
     

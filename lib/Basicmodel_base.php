@@ -25,6 +25,16 @@ class Basicmodel_base extends Basicmodel
         $this->attributes = $this->get_model_attributes();
     }
     
+    # public make();
+    # --------------
+    #
+    # Returns a model with attributes if any has been passed.
+    #
+    public function make($attributes = array())
+    {
+        return $this->_make($attributes);
+    }
+    
     # public get_model_attributes();
     # ------------------------------
     #
@@ -41,24 +51,24 @@ class Basicmodel_base extends Basicmodel
         return $this->_get_model_attributes($name);
     }
     
-    # private _get_model_attributes();
+    # protected _get_model_attributes();
     # --------------------------------
     #
     # Returns an array containing model's properties. Properties come from the database
     # columns.
     #
-    private function _get_model_attributes($name)
+    protected function _get_model_attributes($name)
     {
         $name = $this->_make_db_name($name);
         return $this->_get_table_struct($name);
     }
     
-    # private _make_db_name();
+    # protected _make_db_name();
     # ------------------------
     #
     # Returns a database name for the given model name.
     #
-    private function _make_db_name($name)
+    protected function _make_db_name($name)
     {
         if (empty($name))
         {
@@ -69,22 +79,22 @@ class Basicmodel_base extends Basicmodel
         return strtolower($this->_get_plural($name));
     }
     
-    # private _clean_model_name();
+    # protected _clean_model_name();
     # ----------------------------
     #
     # Strips `_model` from the model name.
     #
-    private function _clean_model_name($name)
+    protected function _clean_model_name($name)
     {
         return preg_replace('/_model/', '', $name);
     }
     
-    # private _get_plural();
+    # protected _get_plural();
     # ----------------------
     #
     # Returns plural form of a given singular noun.
     #
-    private function _get_plural($word)
+    protected function _get_plural($word)
     {
         $inflector = $this->config->item('inflector', 'basicmodel');
         $inflector = ($inflector ? $inflector : 'default');
@@ -102,12 +112,12 @@ class Basicmodel_base extends Basicmodel
         }
     }
     
-    # private _get_table_struct();
+    # protected _get_table_struct();
     # ----------------------------
     #
     # Gets DB table structure for a given table name and returns it as an array.
     #
-    private function _get_table_struct($table)
+    protected function _get_table_struct($table)
     {
         if ($this->db->table_exists($table))
         {
@@ -118,6 +128,26 @@ class Basicmodel_base extends Basicmodel
         {
             return array();
         }
+    }
+    
+    # protected _prepare_model();
+    # -------------------------
+    #
+    # Builds a Basicmodel_model object from passed parameters
+    #
+    protected function _prepare_model($attributes)
+    {
+        return new Basicmodel_model($attributes);
+    }
+    
+    # protected _make();
+    # ----------------
+    #
+    # Returns a Basicmodel_model object.
+    #
+    protected function _make($attributes)
+    {
+        return $this->_prepare_model($attributes);
     }
     
 }
