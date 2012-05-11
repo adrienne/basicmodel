@@ -137,7 +137,20 @@ class Basicmodel_base extends Basicmodel
     #
     protected function _prepare_model($attributes)
     {
-        return new Basicmodel_model($attributes);
+        $model = new Basicmodel_model($attributes);
+        
+        if (!empty($attributes))
+        {
+            foreach($attributes as $attribute => $value)
+            {
+                if (array_search($attribute, $this->attributes))
+                {
+                    $model->$attribute = $value;
+                }
+            }
+        }
+        
+        return $model;
     }
     
     # protected _make();
