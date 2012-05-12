@@ -51,7 +51,7 @@ class Basicmodel_model extends Basicmodel
     
     private function _save()
     {
-        $query_success = $query = $this->db->insert($this->get_property('table_name'), $this);
+        $query_success = $this->db->insert($this->get_property('table_name'), $this);
         
         if ($query_success)
         {

@@ -52,7 +52,7 @@
 # Basicmodel
 # ----------
 #
-# This class should be either loaded or loaded in controller where you want to use Basicmodel.
+# This class should be either loaded automatically or loaded in controller.
 # It makes **Basicmodel_base** available to your models.
 #
 # When you instantiate your models, it returns **Basicmodel_model** instance.
