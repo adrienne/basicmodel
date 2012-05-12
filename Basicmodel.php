@@ -40,8 +40,11 @@
 # Notes and todos
 # ---------------
 #
-# Hitting database each time to lookup model structure and verify that the table exists is slow.
+# 1. Hitting database each time to lookup model structure and verify that the table exists is slow.
 # Should implement caching instead.
+#
+# 2. We should be able to set custom model parameters in the model file, such as ID column, custom
+# table name, etc.
 #
 
 # Basicmodel

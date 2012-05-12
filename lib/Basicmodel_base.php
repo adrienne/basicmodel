@@ -185,6 +185,10 @@ class Basicmodel_base extends Basicmodel
         }
     }
     
+    
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    
+    
     # protected _prepare_model();
     # -------------------------
     #
@@ -196,12 +200,13 @@ class Basicmodel_base extends Basicmodel
     {
         $model = new Basicmodel_model($attributes);
         $properties = $this->properties;
+        $properties['attributes'] = $this->attributes;
         
         if (!empty($attributes))
         {
             foreach($attributes as $attribute => $value)
             {
-                if (array_search($attribute, $this->attributes))
+                if (FALSE !== in_array($attribute, $this->attributes))
                 {
                     $model->$attribute = $value;
                 }
