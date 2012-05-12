@@ -7,11 +7,16 @@
 
 # Contains query methods
 
+error_reporting(E_ALL);
+
 class Basicmodel_base extends Basicmodel
 {
     
     # Contains collected properties from the database
     protected $attributes;
+    
+    # Contains model properties, such as model name or database table name
+    protected $properties;
     
     # public __construct();
     # ---------------------
@@ -22,6 +27,7 @@ class Basicmodel_base extends Basicmodel
     public function __construct()
     {
         parent::__construct();
+        $this->properties = $this->get_model_properties();
         $this->attributes = $this->get_model_attributes();
     }
     
@@ -35,10 +41,30 @@ class Basicmodel_base extends Basicmodel
         return $this->_make($attributes);
     }
     
+    # public get_model_properties();
+    # ------------------------------
+    #
+    # Get's model's properties such as table name and model name.
+    #
+    public function get_model_properties($name = '')
+    {
+        if (empty($name) AND !empty($this->properties))
+        {
+            return $this->properties;
+        }
+        
+        if (empty($name))
+        {
+            $name = get_class($this);
+        }
+        
+        return $this->_get_model_properties($name);
+    }
+    
     # public get_model_attributes();
     # ------------------------------
     #
-    # Gets model's properties. If model name is passed, will use that, otherwise, will
+    # Gets model's attributes. If model name is passed, will use that, otherwise, will
     # use current class name.
     #
     public function get_model_attributes($name = '')
@@ -51,6 +77,26 @@ class Basicmodel_base extends Basicmodel
         return $this->_get_model_attributes($name);
     }
     
+    
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    
+    
+    # protected _get_model_properties();
+    # ----------------------------------
+    #
+    # Returns an array containing model's properties such as model's name and
+    # table name
+    #
+    protected function _get_model_properties($name)
+    {
+        $out = array();
+        $out['original_name'] = get_class($this);
+        $out['model_name'] = $this->_clean_model_name($name);
+        $out['table_name'] = $this->_make_db_name($name);
+        
+        return $out;
+    }
+    
     # protected _get_model_attributes();
     # --------------------------------
     #
@@ -59,7 +105,16 @@ class Basicmodel_base extends Basicmodel
     #
     protected function _get_model_attributes($name)
     {
-        $name = $this->_make_db_name($name);
+        if (empty($name))
+        {
+            $name = $this->properties['table_name'];
+        }
+        
+        else
+        {
+            $name = $this->_make_db_name($name);
+        }
+        
         return $this->_get_table_struct($name);
     }
     
@@ -133,11 +188,14 @@ class Basicmodel_base extends Basicmodel
     # protected _prepare_model();
     # -------------------------
     #
-    # Builds a Basicmodel_model object from passed parameters
+    # Builds a Basicmodel_model object from passed parameters. Also, it
+    # adds a function to the model, which enables it to find it's parameters
+    # on the fly.
     #
     protected function _prepare_model($attributes)
     {
         $model = new Basicmodel_model($attributes);
+        $properties = $this->properties;
         
         if (!empty($attributes))
         {
@@ -149,6 +207,16 @@ class Basicmodel_base extends Basicmodel
                 }
             }
         }
+        
+        $model->get_property = function($property) use($properties)
+        {
+            if ($property AND isset($properties[$property]))
+            {
+                return $properties[$property];
+            }
+            
+            return '';
+        };
         
         return $model;
     }
