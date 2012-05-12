@@ -55,7 +55,8 @@ class Basicmodel_model extends Basicmodel
         
         if ($query_success)
         {
-            $this->id = $this->db->insert_id();
+            $primary_key = $this->get_property('primary_key');
+            $this->$primary_key = $this->db->insert_id();
         }
         
         else

@@ -93,6 +93,8 @@ class Basicmodel_base extends Basicmodel
         $out['original_name'] = get_class($this);
         $out['model_name'] = $this->_clean_model_name($name);
         $out['table_name'] = $this->_make_db_name($name);
+        $out['field_data'] = $this->db->field_data($out['table_name']);
+        $out['primary_key'] = $this->_get_primary_key($out['field_data']);
         
         return $out;
     }
@@ -183,6 +185,25 @@ class Basicmodel_base extends Basicmodel
         {
             return array();
         }
+    }
+    
+    # protected _get_primary_key();
+    # -----------------------------
+    #
+    # Loops through `$this->properties['field_data']` and returns column name that's
+    # set as primary key.
+    #
+    protected function _get_primary_key($columns)
+    {
+        foreach($columns as $column)
+        {
+            if ($column->primary_key === 1)
+            {
+                return $column->name;
+            }
+        }
+        
+        return '';
     }
     
     

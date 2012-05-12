@@ -11,30 +11,30 @@
 
 # In your model:
 #
-#    class Mymodel extends Basicmodel
-#    {
-#       
-#    }
+#     class Mymodel extends Basicmodel
+#     {
+#     
+#     }
 #
 # In your controller:
 #
-#    $this->load->model('mymodel_model', 'mymodel');
-#    $mymodel = $this->mymodel->make();
-#    $mymodel->name = 'My name';
-#    $mymodel->save();
+#     $this->load->model('mymodel_model', 'mymodel');
+#     $mymodel = $this->mymodel->make();
+#     $mymodel->name = 'My name';
+#     $mymodel->save();
 #
 # Or, in your controller:
 #
-#    $this->load->model('mymodel_model', 'mymodel');
-#    $mymodels = $this->mymodel->all();
+#     $this->load->model('mymodel_model', 'mymodel');
+#     $mymodels = $this->mymodel->all();
 #
-#    $this->load->view('myview', array('models' => $mymodels))
+#     $this->load->view('myview', array('models' => $mymodels))
 #
 # And then in your view:
 #
-#    foreach($models as $model):
-#       echo $model->name;
-#    endforeach;
+#     foreach($models as $model):
+#        echo $model->name;
+#     endforeach;
 #
 
 # Notes and todos
@@ -45,6 +45,8 @@
 #
 # 2. We should be able to set custom model parameters in the model file, such as ID column, custom
 # table name, etc.
+#
+# 3. Need a file that would contain error messages.
 #
 
 # Basicmodel
