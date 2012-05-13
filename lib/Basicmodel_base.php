@@ -30,16 +30,10 @@ class Basicmodel_base extends Basicmodel
         $this->properties = $this->get_model_properties();
         $this->attributes = $this->get_model_attributes();
     }
-    
-    # public make();
-    # --------------
-    #
-    # Returns a model with attributes if any has been passed.
-    #
-    public function make($attributes = array())
-    {
-        return $this->_make($attributes);
-    }
+
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     
     # public get_model_properties();
     # ------------------------------
@@ -78,6 +72,42 @@ class Basicmodel_base extends Basicmodel
     }
     
     
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    
+    # public make();
+    # --------------
+    #
+    # Returns a model with attributes if any has been passed.
+    #
+    public function make($attributes = array())
+    {
+        return $this->_make($attributes);
+    }
+
+
+    # public find();
+    # --------------
+    #
+    # Queries database to find a record that corresponds to the given primary key value.
+    #
+    #     $mymodel = $this->model->find(2);
+    # 
+    # TODO: pass in an array of primary keys to generate `WHERE ... IN` query.
+    #
+    public function find($keys = array())
+    {
+        if (empty($keys)) return FALSE;
+
+        if (!is_array($keys))
+        {
+            $keys = array($keys);
+        }
+
+        return $this->_find($keys);
+    }
+
+
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
     
@@ -246,15 +276,42 @@ class Basicmodel_base extends Basicmodel
         
         return $model;
     }
+
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    
     
     # protected _make();
     # ----------------
     #
-    # Returns a Basicmodel_model object.
+    # Returns a Basicmodel_model object with properties assigned.
     #
     protected function _make($attributes)
     {
         return $this->_prepare_model($attributes);
+    }
+
+    # protected _find();
+    # ------------------
+    #
+    # Expects an array with primary keys.
+    #
+    protected function _find($keys)
+    {
+        if (count($keys) === 1)
+        {
+            $this->db->where($this->properties['primary_key'], $keys[0]);
+            $this->db->limit(1);
+        }
+
+        else
+        {
+            $this->db->where_in($this->properties['primary_key'], $keys);
+        }
+
+        $query = $this->db->get($this->properties['table_name']);
+
+        return (count($keys) === 1 ? $query->row() : $query->result_array());
     }
     
 }
