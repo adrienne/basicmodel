@@ -85,14 +85,14 @@ class Basicmodel_base extends Basicmodel
         return $this->_make($attributes);
     }
 
-    # public make_array();
+    # public make_many();
     # --------------------
     #
     # Returns an array of models with attributes if any has been passed
     #
-    public function make_array($attributes = array())
+    public function make_many($attributes = array())
     {
-        return $this->_make_array($attributes);
+        return $this->_make_many($attributes);
     }
 
 
@@ -304,12 +304,12 @@ class Basicmodel_base extends Basicmodel
         return $this->_prepare_model($attributes);
     }
 
-    # protected _make_array();
+    # protected _make_many();
     # ------------------------
     #
     # Returns an array of Basicmodel_model objects.
     #
-    protected function _make_array($models)
+    protected function _make_many($models)
     {
         $out = array();
 
@@ -353,7 +353,7 @@ class Basicmodel_base extends Basicmodel
             if ($query->num_rows() > 0)
             {
                 $result = $query->result_array();
-                return $this->make_array($result);
+                return $this->make_many($result);
             }
         }
 
