@@ -11,7 +11,7 @@ class Basicmodel_model extends Basicmodel
 {
     
     # public save();
-    # -------
+    # --------------
     #
     # Saves model.
     #

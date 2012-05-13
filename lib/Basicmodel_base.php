@@ -85,11 +85,22 @@ class Basicmodel_base extends Basicmodel
         return $this->_make($attributes);
     }
 
+    # public make_array();
+    # --------------------
+    #
+    # Returns an array of models with attributes if any has been passed
+    #
+    public function make_array($attributes = array())
+    {
+        return $this->_make_array($attributes);
+    }
+
 
     # public find();
     # --------------
     #
     # Queries database to find a record that corresponds to the given primary key value.
+    # Returns `false` if nothing was found.
     #
     #     $mymodel = $this->model->find(2);
     # 
@@ -130,7 +141,7 @@ class Basicmodel_base extends Basicmodel
     }
     
     # protected _get_model_attributes();
-    # --------------------------------
+    # ----------------------------------
     #
     # Returns an array containing model's properties. Properties come from the database
     # columns.
@@ -151,7 +162,7 @@ class Basicmodel_base extends Basicmodel
     }
     
     # protected _make_db_name();
-    # ------------------------
+    # --------------------------
     #
     # Returns a database name for the given model name.
     #
@@ -167,7 +178,7 @@ class Basicmodel_base extends Basicmodel
     }
     
     # protected _clean_model_name();
-    # ----------------------------
+    # ------------------------------
     #
     # Strips `_model` from the model name.
     #
@@ -177,7 +188,7 @@ class Basicmodel_base extends Basicmodel
     }
     
     # protected _get_plural();
-    # ----------------------
+    # ------------------------
     #
     # Returns plural form of a given singular noun.
     #
@@ -200,7 +211,7 @@ class Basicmodel_base extends Basicmodel
     }
     
     # protected _get_table_struct();
-    # ----------------------------
+    # ------------------------------
     #
     # Gets DB table structure for a given table name and returns it as an array.
     #
@@ -241,26 +252,28 @@ class Basicmodel_base extends Basicmodel
     
     
     # protected _prepare_model();
-    # -------------------------
+    # ---------------------------
     #
     # Builds a Basicmodel_model object from passed parameters. Also, it
     # adds a function to the model, which enables it to find it's parameters
     # on the fly.
     #
-    protected function _prepare_model($attributes)
+    protected function _prepare_model($submitted_attributes)
     {
-        $model = new Basicmodel_model($attributes);
+        $model = new Basicmodel_model();
         $properties = $this->properties;
         $properties['attributes'] = $this->attributes;
         
-        if (!empty($attributes))
+        foreach($this->attributes as $attribute)
         {
-            foreach($attributes as $attribute => $value)
+            if (FALSE !== array_key_exists($attribute, $submitted_attributes))
             {
-                if (FALSE !== in_array($attribute, $this->attributes))
-                {
-                    $model->$attribute = $value;
-                }
+                $model->$attribute = $submitted_attributes[$attribute];
+            }
+
+            else
+            {
+                $model->$attribute = null;
             }
         }
         
@@ -282,7 +295,7 @@ class Basicmodel_base extends Basicmodel
     
     
     # protected _make();
-    # ----------------
+    # ------------------
     #
     # Returns a Basicmodel_model object with properties assigned.
     #
@@ -290,6 +303,27 @@ class Basicmodel_base extends Basicmodel
     {
         return $this->_prepare_model($attributes);
     }
+
+    # protected _make_array();
+    # ------------------------
+    #
+    # Returns an array of Basicmodel_model objects.
+    #
+    protected function _make_array($models)
+    {
+        $out = array();
+
+        foreach ($models as $attributes)
+        {
+            $out[] = $this->make($attributes);
+        }
+
+        return $out;
+    }
+
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 
     # protected _find();
     # ------------------
@@ -302,16 +336,28 @@ class Basicmodel_base extends Basicmodel
         {
             $this->db->where($this->properties['primary_key'], $keys[0]);
             $this->db->limit(1);
+            $query = $this->db->get($this->properties['table_name']);
+
+            if ($query->num_rows() > 0)
+            {
+                $result = $query->row_array();
+                return $this->make($result);
+            }
         }
 
         else
         {
             $this->db->where_in($this->properties['primary_key'], $keys);
+            $query = $this->db->get($this->properties['table_name']);
+
+            if ($query->num_rows() > 0)
+            {
+                $result = $query->result_array();
+                return $this->make_array($result);
+            }
         }
 
-        $query = $this->db->get($this->properties['table_name']);
-
-        return (count($keys) === 1 ? $query->row() : $query->result_array());
+        return FALSE;
     }
     
 }

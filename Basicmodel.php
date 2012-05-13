@@ -48,6 +48,8 @@
 #
 # 3. Need a file that would contain error messages.
 #
+# 4. Decide on testing framework and use it.
+#
 
 # Basicmodel
 # ----------
