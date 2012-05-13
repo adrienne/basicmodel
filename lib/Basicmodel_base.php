@@ -24,11 +24,14 @@ class Basicmodel_base extends Basicmodel
     # When the model is loaded, will populate $this->properties with model's attributes
     # fetched from the database.
     #
+    # Additionally, generates query methods from attributes.
+    #
     public function __construct()
     {
         parent::__construct();
         $this->properties = $this->get_model_properties();
         $this->attributes = $this->get_model_attributes();
+        $this->_generate_methods_from_attributes();
     }
 
 
@@ -69,53 +72,6 @@ class Basicmodel_base extends Basicmodel
         }
         
         return $this->_get_model_attributes($name);
-    }
-    
-    
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-    
-    # public make();
-    # --------------
-    #
-    # Returns a model with attributes if any has been passed.
-    #
-    public function make($attributes = array())
-    {
-        return $this->_make($attributes);
-    }
-
-    # public make_many();
-    # --------------------
-    #
-    # Returns an array of models with attributes if any has been passed
-    #
-    public function make_many($attributes = array())
-    {
-        return $this->_make_many($attributes);
-    }
-
-
-    # public find();
-    # --------------
-    #
-    # Queries database to find a record that corresponds to the given primary key value.
-    # Returns `false` if nothing was found.
-    #
-    #     $mymodel = $this->model->find(2);
-    # 
-    # TODO: pass in an array of primary keys to generate `WHERE ... IN` query.
-    #
-    public function find($keys = array())
-    {
-        if (empty($keys)) return FALSE;
-
-        if (!is_array($keys))
-        {
-            $keys = array($keys);
-        }
-
-        return $this->_find($keys);
     }
 
 
@@ -245,6 +201,53 @@ class Basicmodel_base extends Basicmodel
         }
         
         return '';
+    }
+    
+    
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    
+    # public make();
+    # --------------
+    #
+    # Returns a model with attributes if any has been passed.
+    #
+    public function make($attributes = array())
+    {
+        return $this->_make($attributes);
+    }
+
+    # public make_many();
+    # --------------------
+    #
+    # Returns an array of models with attributes if any has been passed
+    #
+    public function make_many($attributes = array())
+    {
+        return $this->_make_many($attributes);
+    }
+
+
+    # public find();
+    # --------------
+    #
+    # Queries database to find a record that corresponds to the given primary key value.
+    # Returns `false` if nothing was found.
+    #
+    #     $mymodel = $this->model->find(2);
+    # 
+    # TODO: pass in an array of primary keys to generate `WHERE ... IN` query.
+    #
+    public function find($keys = array())
+    {
+        if (empty($keys)) return FALSE;
+
+        if (!is_array($keys))
+        {
+            $keys = array($keys);
+        }
+
+        return $this->_find($keys);
     }
     
     
