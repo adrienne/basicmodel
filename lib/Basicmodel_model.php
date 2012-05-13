@@ -49,6 +49,12 @@ class Basicmodel_model extends Basicmodel
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
     
+    # private _save();
+    # ----------------
+    #
+    # Attempts to save the model to the database. If succeeds, returns the Basicmodel_model
+    # object with newly set ID, otherwise triggers PHP error.
+    #
     private function _save()
     {
         $query_success = $this->db->insert($this->get_property('table_name'), $this);
