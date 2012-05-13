@@ -183,6 +183,26 @@ class Basicmodel_base extends Basicmodel
             return array();
         }
     }
+
+    # protected _generate_methods_from_attributes();
+    # ----------------------------------------------
+    #
+    # Generates query methods from attributes.
+    #
+    protected function _generate_methods_from_attributes()
+    {
+        if (!empty($this->attributes))
+        {
+            foreach($this->attributes as $attribute)
+            {
+                $method_name = 'find_by_'.$attribute;
+                $this->$method_name = function()
+                {
+                    echo '<pre><code>'; print_r('Works!'); echo '</code></pre>';
+                };
+            }
+        }
+    }
     
     # protected _get_primary_key();
     # -----------------------------
