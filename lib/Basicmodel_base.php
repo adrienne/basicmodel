@@ -328,7 +328,7 @@ class Basicmodel_base extends Basicmodel
 
             else
             {
-                $model->$attribute = null;
+                $model->$attribute = '';
             }
         }
         
