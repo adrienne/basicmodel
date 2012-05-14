@@ -31,7 +31,29 @@ class Basicmodel_base extends Basicmodel
         parent::__construct();
         $this->properties = $this->get_model_properties();
         $this->attributes = $this->get_model_attributes();
-        $this->_generate_methods_from_attributes();
+    }
+
+    # public __call();
+    # ----------------
+    #
+    # Allows usage of methods such as
+    #
+    #     $mymodel = $this->model->find_by_id(2012);
+    #
+    # which are generated from model attributes.
+    #
+    public function __call($method, $args)
+    {
+        if (preg_match('/^find_by_/', $method))
+        {
+            $method_name = substr_replace($method, '', 0, strlen('find_by_'));
+
+            if (!in_array($method_name, $this->attributes)) return FALSE;
+
+            return $this->find_by($method_name, $args);
+        }
+
+        parent::__call($method, $args);
     }
 
 
@@ -183,26 +205,6 @@ class Basicmodel_base extends Basicmodel
             return array();
         }
     }
-
-    # protected _generate_methods_from_attributes();
-    # ----------------------------------------------
-    #
-    # Generates query methods from attributes.
-    #
-    protected function _generate_methods_from_attributes()
-    {
-        if (!empty($this->attributes))
-        {
-            foreach($this->attributes as $attribute)
-            {
-                $method_name = 'find_by_'.$attribute;
-                $this->$method_name = function()
-                {
-                    echo '<pre><code>'; print_r('Works!'); echo '</code></pre>';
-                };
-            }
-        }
-    }
     
     # protected _get_primary_key();
     # -----------------------------
@@ -255,19 +257,27 @@ class Basicmodel_base extends Basicmodel
     # Returns `false` if nothing was found.
     #
     #     $mymodel = $this->model->find(2);
-    # 
-    # TODO: pass in an array of primary keys to generate `WHERE ... IN` query.
     #
     public function find($keys = array())
     {
         if (empty($keys)) return FALSE;
 
-        if (!is_array($keys))
-        {
-            $keys = array($keys);
-        }
+        return $this->find_by($this->properties['primary_key'], $keys);
+    }
 
-        return $this->_find($keys);
+    # public find_by();
+    # -----------------
+    #
+    # Allows to search by passing **attribute_name** and arguments.
+    #
+    #     $mymodel = $this->model->find_by('name', 'John');
+    #
+    public function find_by($column, $keys)
+    {
+        if (empty($column) || empty($keys)) return FALSE;
+
+        $keys = $this->_prepare_find_array($keys);
+        return $this->_find_by($column, $keys);
     }
     
     
@@ -313,6 +323,21 @@ class Basicmodel_base extends Basicmodel
         return $model;
     }
 
+    # protected _prepare_find_array();
+    # --------------------------------
+    #
+    # Prepares $keys for usage in find() methods.
+    #
+    protected function _prepare_find_array($keys)
+    {
+        if (!is_array($keys))
+        {
+            $keys = array($keys);
+        }
+
+        return $keys;
+    }
+
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
@@ -348,16 +373,16 @@ class Basicmodel_base extends Basicmodel
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
-    # protected _find();
+    # protected _find_by();
     # ------------------
     #
-    # Expects an array with primary keys.
+    # Expects an array with single or multiple params of the same type.
     #
-    protected function _find($keys)
+    protected function _find_by($column, $keys)
     {
         if (count($keys) === 1)
         {
-            $this->db->where($this->properties['primary_key'], $keys[0]);
+            $this->db->where($column, $keys[0]);
             $this->db->limit(1);
             $query = $this->db->get($this->properties['table_name']);
 
@@ -370,7 +395,7 @@ class Basicmodel_base extends Basicmodel
 
         else
         {
-            $this->db->where_in($this->properties['primary_key'], $keys);
+            $this->db->where_in($column, $keys);
             $query = $this->db->get($this->properties['table_name']);
 
             if ($query->num_rows() > 0)

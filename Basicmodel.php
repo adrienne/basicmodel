@@ -81,7 +81,7 @@ class Basicmodel extends CI_Model
     public function __call($method, $args)
     {
         if (isset($this->$method)) {
-            $func = $this->$method;
+            $func = array($this, $method);
             return call_user_func_array($func, $args);
         }
     }
