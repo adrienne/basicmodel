@@ -280,11 +280,11 @@ class Basicmodel_base extends Basicmodel
     #
     #     $mymodel = $this->model->find(2);
     #
-    public function find($keys = array())
+    public function find($values = array())
     {
-        if (empty($keys)) return FALSE;
+        if (empty($values)) return FALSE;
 
-        return $this->find_by($this->properties['primary_key'], $keys);
+        return $this->find_by($this->properties['primary_key'], $values);
     }
 
     # public find_by();
@@ -294,12 +294,12 @@ class Basicmodel_base extends Basicmodel
     #
     #     $mymodel = $this->model->find_by('name', 'John');
     #
-    public function find_by($column, $keys)
+    public function find_by($key, $values)
     {
-        if (empty($column) || empty($keys)) return FALSE;
+        if (empty($key) || empty($values)) return FALSE;
 
-        $keys = $this->_prepare_find_array($keys);
-        return $this->_find_by($column, $keys);
+        $keys = $this->_prepare_find_array($values);
+        return $this->_find_by($key, $values);
     }
     
     
@@ -400,34 +400,69 @@ class Basicmodel_base extends Basicmodel
     #
     # Expects an array with single or multiple params for the same attribute.
     #
-    protected function _find_by($column, $keys)
+    protected function _find_by($key, $values)
     {
-        if (count($keys) === 1)
-        {
-            $this->db->where($column, $keys[0]);
-            $this->db->limit(1);
-            $query = $this->db->get($this->properties['table_name']);
+        $primary_key_flag = ($key === $this->properties['primary_key']);
+        $result = FALSE;
 
-            if ($query->num_rows() > 0)
-            {
-                $result = $query->row_array();
-                return $this->make($result);
-            }
+        // if (count($values) === 1)
+        // {
+        //     $this->db->where($key, $values[0]);
+        //     $this->db->limit(1);
+        //     $query = $this->db->get($this->properties['table_name']);
+
+        //     if ($query->num_rows() > 0)
+        //     {
+        //         $result = $query->row_array();
+        //         return $this->make($result);
+        //     }
+        // }
+
+        // else
+        // {
+        //     $this->db->where_in($key, $values);
+        //     $query = $this->db->get($this->properties['table_name']);
+
+        //     if ($query->num_rows() > 0)
+        //     {
+        //         $result = $query->result_array();
+        //         return $this->make_many($result);
+        //     }
+        // }
+
+        if (count($values) === 1)
+        {
+            $this->db->where($key, $values[0]);
         }
 
         else
         {
-            $this->db->where_in($column, $keys);
-            $query = $this->db->get($this->properties['table_name']);
+            $this->db->where_in($key, $values);
+        }
 
-            if ($query->num_rows() > 0)
+        if ($primary_key_flag)
+        {
+            $this->db->limit(1);
+        }
+
+        $query = $this->db->get($this->properties['table_name']);
+
+        if ($query->num_rows() > 0)
+        {
+            if ($primary_key_flag)
+            {
+                $result = $query->row_array();
+                $result = $this->make($result);
+            }
+
+            else
             {
                 $result = $query->result_array();
-                return $this->make_many($result);
+                $result = $this->make_many($result);
             }
         }
 
-        return FALSE;
+        return $result;
     }
     
 }
