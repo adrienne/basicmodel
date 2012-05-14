@@ -1,4 +1,4 @@
 basicmodel
 ==========
 
-Basic Model is a CodeIgniter library to easy your work with standard models in CodeIgniter
+Basic Model is a CodeIgniter library to ease your work with standard models in CodeIgniter.
