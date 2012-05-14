@@ -17,6 +17,9 @@ class Basicmodel_base extends Basicmodel
     
     # Contains model properties, such as model name or database table name
     protected $properties;
+
+    # Contains overrides for properties
+    protected $overrides = array();
     
     # public __construct();
     # ---------------------
@@ -98,6 +101,25 @@ class Basicmodel_base extends Basicmodel
 
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+    # public set_table_name();
+    # ------------------------
+    #
+    # Set's a different table name for the models.
+    #
+    public function set_table_name($name = '')
+    {
+        if (!empty($name))
+        {
+            $this->overrides['table_name'] = $name;
+        }
+
+        return $this;
+    }
+
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
     
     # protected _get_model_properties();
@@ -111,7 +133,7 @@ class Basicmodel_base extends Basicmodel
         $out = array();
         $out['original_name'] = get_class($this);
         $out['model_name'] = $this->_clean_model_name($name);
-        $out['table_name'] = $this->_make_db_name($name);
+        $out['table_name'] = (isset($this->overrides['table_name']) ? $this->overrides['table_name'] : $this->_make_db_name($name));
         $out['field_data'] = $this->db->field_data($out['table_name']);
         $out['primary_key'] = $this->_get_primary_key($out['field_data']);
         
@@ -376,7 +398,7 @@ class Basicmodel_base extends Basicmodel
     # protected _find_by();
     # ------------------
     #
-    # Expects an array with single or multiple params of the same type.
+    # Expects an array with single or multiple params for the same attribute.
     #
     protected function _find_by($column, $keys)
     {
