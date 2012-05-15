@@ -11,7 +11,7 @@
 
 # In your model:
 #
-#     class Mymodel extends Basicmodel
+#     class Mymodel_model extends Basicmodel_base
 #     {
 #     
 #     }
@@ -20,7 +20,7 @@
 #
 #     $this->load->model('mymodel_model', 'mymodel');
 #     $mymodel = $this->mymodel->make();
-#     $mymodel->name = 'My name';
+#     $mymodel->set('name', 'John');
 #     $mymodel->save();
 #
 # Or, in your controller:
@@ -69,21 +69,22 @@ class Basicmodel extends CI_Model
         $path = rtrim(dirname(__FILE__), '/').'/';
         require_once($path.'lib/Basicmodel_base.php');
         require_once($path.'lib/Basicmodel_model.php');
+        require_once($path.'lib/Basicmodel_collection.php');
         $this->config->load('basicmodel', FALSE, TRUE);
     }
 
-    # magic __call();
-    # ---------------
-    #
-    # Since a lot of methods in both Basicmodel_base and Basicmodel_model are generated on the
-    # fly, this method is inherited by the mentioned classes and runs the generated methods.
-    #
-    public function __call($method, $args)
-    {
-        if (isset($this->$method)) {
-            $func = $this->$method;
-            return call_user_func_array($func, $args);
-        }
-    }
+    // # magic __call();
+    // # ---------------
+    // #
+    // # Since a lot of methods in both Basicmodel_base and Basicmodel_model are generated on the
+    // # fly, this method is inherited by the mentioned classes and runs the generated methods.
+    // #
+    // public function __call($method, $args)
+    // {
+    //     if (isset($this->$method)) {
+    //         $func = $this->$method;
+    //         return call_user_func_array($func, $args);
+    //     }
+    // }
     
 }
