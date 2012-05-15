@@ -60,5 +60,34 @@ class Basicmodel_model extends Basicmodel
         
         return $this;
     }
+
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+    public function to_array()
+    {
+        $out = array();
+
+        foreach ($this->get_property('attributes') as $property)
+        {
+            $out[$property] = null;
+        }
+
+        foreach($this as $key => $value)
+        {
+            if (!is_callable($this->$key))
+            {
+                $out[$key] = $value;
+            }
+        }
+
+        return $out;
+    }
+
+    public function to_json()
+    {
+        return json_encode($this->to_array());
+    }
     
 }
