@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 #
-#     Basicmodel 0.1.0
+#     Basicmodel 0.0.1
 #     (c) 2012 Mindaugas Bujanauskas, Apollo Music Aps
 #
 
@@ -73,18 +73,18 @@ class Basicmodel extends CI_Model
         $this->config->load('basicmodel', FALSE, TRUE);
     }
 
-    // # magic __call();
-    // # ---------------
-    // #
-    // # Since a lot of methods in both Basicmodel_base and Basicmodel_model are generated on the
-    // # fly, this method is inherited by the mentioned classes and runs the generated methods.
-    // #
-    // public function __call($method, $args)
-    // {
-    //     if (isset($this->$method)) {
-    //         $func = $this->$method;
-    //         return call_user_func_array($func, $args);
-    //     }
-    // }
+    # magic __call();
+    # ---------------
+    #
+    # Since a lot of methods in both Basicmodel_base and Basicmodel_model are generated on the
+    # fly, this method is inherited by the mentioned classes and runs the generated methods.
+    #
+    public function __call($method, $args)
+    {
+        if (isset($this->$method)) {
+            $func = $this->$method;
+            return call_user_func_array($func, $args);
+        }
+    }
     
 }
