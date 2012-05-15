@@ -53,7 +53,9 @@ class Basicmodel_base extends Basicmodel
 
             if (!in_array($method_name, $this->attributes)) return FALSE;
 
-            return $this->find_by($method_name, $args);
+            array_unshift($args, $method_name);
+
+            return call_user_func_array(array($this, 'find_by'), $args);
         }
 
         parent::__call($method, $args);
@@ -294,12 +296,16 @@ class Basicmodel_base extends Basicmodel
     #
     #     $mymodel = $this->model->find_by('name', 'John');
     #
-    public function find_by($key, $values)
+    # Or:
+    #
+    #     $mymodel = $this->model->find_by('name', 'John', array('status' => 'single'));
+    #
+    public function find_by($key, $values, $conditions = array())
     {
         if (empty($key) || empty($values)) return FALSE;
 
         $keys = $this->_prepare_find_array($values);
-        return $this->_find_by($key, $values);
+        return $this->_find_by($key, $keys, $conditions);
     }
     
     
@@ -400,35 +406,10 @@ class Basicmodel_base extends Basicmodel
     #
     # Expects an array with single or multiple params for the same attribute.
     #
-    protected function _find_by($key, $values)
+    protected function _find_by($key, $values, $conditions)
     {
         $primary_key_flag = ($key === $this->properties['primary_key']);
         $result = FALSE;
-
-        // if (count($values) === 1)
-        // {
-        //     $this->db->where($key, $values[0]);
-        //     $this->db->limit(1);
-        //     $query = $this->db->get($this->properties['table_name']);
-
-        //     if ($query->num_rows() > 0)
-        //     {
-        //         $result = $query->row_array();
-        //         return $this->make($result);
-        //     }
-        // }
-
-        // else
-        // {
-        //     $this->db->where_in($key, $values);
-        //     $query = $this->db->get($this->properties['table_name']);
-
-        //     if ($query->num_rows() > 0)
-        //     {
-        //         $result = $query->result_array();
-        //         return $this->make_many($result);
-        //     }
-        // }
 
         if (count($values) === 1)
         {
@@ -443,6 +424,11 @@ class Basicmodel_base extends Basicmodel
         if ($primary_key_flag)
         {
             $this->db->limit(1);
+        }
+
+        if (!empty($conditions))
+        {
+            $this->db->where($conditions);
         }
 
         $query = $this->db->get($this->properties['table_name']);
