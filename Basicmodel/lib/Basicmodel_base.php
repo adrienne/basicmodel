@@ -12,7 +12,7 @@ error_reporting(E_ALL);
 class Basicmodel_base extends Basicmodel
 {
     
-    # Contains collected properties from the database
+    # Contains collected property names from the database
     protected $attributes;
     
     # Contains model properties, such as model name or database table name
@@ -24,14 +24,21 @@ class Basicmodel_base extends Basicmodel
     # public __construct();
     # ---------------------
     #
-    # When the model is loaded, will populate $this->properties with model's attributes
-    # fetched from the database.
+    # When the model is loaded (in the controller for example), will populate $this->properties with
+    # model's attributes fetched from the database.
     #
-    # Additionally, generates query methods from attributes.
+    # Sometimes various options need to be overriden. In that case, the `init()` method needs to be defined
+    # in the model file and override methods need to be called there.
     #
     public function __construct()
     {
         parent::__construct();
+
+        if (method_exists($this, 'init'))
+        {
+            $this->init();
+        }
+
         $this->properties = $this->get_model_properties();
         $this->attributes = $this->get_model_attributes();
     }
@@ -45,16 +52,16 @@ class Basicmodel_base extends Basicmodel
     #
     # which are generated from model attributes.
     #
+    # Figures out what is the search key by removing the `find_by_` part of the method,
+    # prepends it to `args` array and passes it to `find_by` method.
+    #
     public function __call($method, $args)
     {
         if (preg_match('/^find_by_/', $method))
         {
             $method_name = substr_replace($method, '', 0, strlen('find_by_'));
-
             if (!in_array($method_name, $this->attributes)) return FALSE;
-
             array_unshift($args, $method_name);
-
             return call_user_func_array(array($this, 'find_by'), $args);
         }
 
@@ -63,6 +70,9 @@ class Basicmodel_base extends Basicmodel
 
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    # Public utility methods
+    # =============================================================================
 
     
     # public get_model_properties();
@@ -103,6 +113,9 @@ class Basicmodel_base extends Basicmodel
 
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    # Override methods
+    # =============================================================================
 
 
     # public set_table_name();
@@ -122,6 +135,9 @@ class Basicmodel_base extends Basicmodel
 
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    # Private utility methods
+    # =============================================================================
     
     
     # protected _get_model_properties();
@@ -251,6 +267,9 @@ class Basicmodel_base extends Basicmodel
     
     
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    # Public query methods
+    # =============================================================================
 
     
     # public make();
@@ -310,6 +329,9 @@ class Basicmodel_base extends Basicmodel
     
     
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    # Private model generation utilities
+    # =============================================================================
     
     
     # protected _prepare_model();
@@ -368,6 +390,9 @@ class Basicmodel_base extends Basicmodel
 
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    # Private query methods
+    # =============================================================================
     
     
     # protected _make();
@@ -396,10 +421,6 @@ class Basicmodel_base extends Basicmodel
 
         return $out;
     }
-
-
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
 
     # protected _find_by();
     # ------------------

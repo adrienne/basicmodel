@@ -33,7 +33,7 @@
 # And then in your view:
 #
 #     foreach($models as $model):
-#        echo $model->name;
+#        echo $model->get('name');
 #     endforeach;
 #
 
