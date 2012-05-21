@@ -147,22 +147,7 @@ class Basicmodel_model extends Basicmodel
 
     public function to_array()
     {
-        $out = array();
-
-        foreach ($this->properties['attributes'] as $property)
-        {
-            $out[$property] = null;
-        }
-
-        foreach($this as $key => $value)
-        {
-            if (!is_callable($this->$key))
-            {
-                $out[$key] = $value;
-            }
-        }
-
-        return $out;
+        return $this->attributes;
     }
 
     public function to_json()
