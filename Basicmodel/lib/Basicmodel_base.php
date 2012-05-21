@@ -331,7 +331,7 @@ class Basicmodel_base extends Basicmodel
     
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     #
-    # Private model generation utilities
+    # Private model and collection generation utilities
     # =============================================================================
     
     
@@ -422,18 +422,20 @@ class Basicmodel_base extends Basicmodel
     # protected _make_many();
     # ------------------------
     #
-    # Returns an array of Basicmodel_model objects.
+    # Returns a Basicmodel_collection object.
     #
     protected function _make_many($models)
     {
-        $out = array();
+        $instances = array();
 
         foreach ($models as $attributes)
         {
-            $out[] = $this->make($attributes);
+            $instances[] = $this->make($attributes);
         }
 
-        return $out;
+        $collection = new Basicmodel_collection($instances);
+
+        return $collection;
     }
 
     # protected _find_by();
