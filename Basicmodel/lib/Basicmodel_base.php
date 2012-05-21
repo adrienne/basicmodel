@@ -343,8 +343,18 @@ class Basicmodel_base extends Basicmodel
     #
     protected function _prepare_model($submitted_attributes)
     {
+        $extended_model_name = $this->properties['model_name'].'_basicmodel';
         $clean_attributes = $this->_clean_attributes($submitted_attributes);
-        $model = new Basicmodel_model($clean_attributes);
+
+        if (class_exists($extended_model_name))
+        {
+            $model = new $extended_model_name($clean_attributes);
+        }
+
+        else
+        {
+            $model = new Basicmodel_model($clean_attributes); 
+        }
 
         $model->properties = $this->properties;
         $model->properties['attributes'] = $this->attributes;
