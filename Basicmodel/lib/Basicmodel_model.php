@@ -151,7 +151,7 @@ class Basicmodel_model extends Basicmodel
 
         foreach ($this->attributes as $key => $value)
         {
-            if ($this->attributes[$key] instanceof Basicmodel_collection || $this->attributes[$key] instanceof Basicmodel_model)
+            if ($this->attributes[$key] instanceof Basicmodel)
             {
                 $out[$key] = $this->attributes[$key]->to_array();
             }
