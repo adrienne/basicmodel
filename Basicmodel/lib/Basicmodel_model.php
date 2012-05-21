@@ -145,6 +145,12 @@ class Basicmodel_model extends Basicmodel
     # =============================================================================
 
 
+    # public to_array();
+    # ------------------
+    #
+    # Goes through each property of the model, if this property is an instance of Basicmodel, it will be
+    # converted to array, otherwise adds the property to the output array.
+    #
     public function to_array()
     {
         $out = array();
@@ -165,6 +171,11 @@ class Basicmodel_model extends Basicmodel
         return $out;
     }
 
+    # public to_json();
+    # -----------------
+    #
+    # Returns this model encoded to JSON.
+    #
     public function to_json()
     {
         return json_encode($this->to_array());
