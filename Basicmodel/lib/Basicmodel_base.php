@@ -285,11 +285,11 @@ class Basicmodel_base extends Basicmodel
     # public make_many();
     # --------------------
     #
-    # Returns an array of models with attributes if any has been passed
+    # Returns a collection with models if any have been passed
     #
-    public function make_many($attributes = array())
+    public function make_many($models = array())
     {
-        return $this->_make_many($attributes);
+        return $this->_make_many($models);
     }
 
 
