@@ -50,6 +50,8 @@
 #
 # 4. Decide on testing framework and use it.
 #
+# 5. When instantiating a model, use model's default values when no value is passed.
+#
 
 # Basicmodel
 # ----------
