@@ -323,8 +323,9 @@ class Basicmodel_base extends Basicmodel
     {
         if (empty($key) || empty($values)) return FALSE;
 
-        $keys = $this->_prepare_find_array($values);
-        return $this->_find_by($key, $keys, $conditions);
+        $values = $this->_prepare_find_array($values);
+
+        return $this->_find_by($key, $values, $conditions);
     }
     
     
@@ -337,38 +338,16 @@ class Basicmodel_base extends Basicmodel
     # protected _prepare_model();
     # ---------------------------
     #
-    # Builds a Basicmodel_model object from passed parameters. Also, it
-    # adds a function to the model, which enables it to find it's parameters
-    # on the fly.
+    # If specific model class is available, uses it to build a model, otherwise, uses generic Basicmodel_model
+    # class to create a new instance of model.
     #
     protected function _prepare_model($submitted_attributes)
     {
-        $model = new Basicmodel_model();
-        $properties = $this->properties;
-        $properties['attributes'] = $this->attributes;
-        
-        foreach($this->attributes as $attribute)
-        {
-            if (FALSE !== array_key_exists($attribute, $submitted_attributes))
-            {
-                $model->$attribute = $submitted_attributes[$attribute];
-            }
+        $clean_attributes = $this->_clean_attributes($submitted_attributes);
+        $model = new Basicmodel_model($clean_attributes);
 
-            else
-            {
-                $model->$attribute = '';
-            }
-        }
-        
-        $model->get_property = function($property) use($properties)
-        {
-            if ($property AND isset($properties[$property]))
-            {
-                return $properties[$property];
-            }
-            
-            return '';
-        };
+        $model->properties = $this->properties;
+        $model->properties['attributes'] = $this->attributes;
         
         return $model;
     }
@@ -386,6 +365,31 @@ class Basicmodel_base extends Basicmodel
         }
 
         return $keys;
+    }
+
+    # protected _clean_attributes();
+    # ------------------------------
+    #
+    # Removes all attributes that are not specified in `$this->attributes`
+    #
+    protected function _clean_attributes($submitted_attributes)
+    {
+        $out = array();
+
+        foreach($this->attributes as $attribute)
+        {
+            if (FALSE !== array_key_exists($attribute, $submitted_attributes))
+            {
+                $out[$attribute] = $submitted_attributes[$attribute];
+            }
+
+            else
+            {
+                $out[$attribute] = '';
+            }
+        }
+
+        return $out;
     }
 
 
@@ -429,7 +433,7 @@ class Basicmodel_base extends Basicmodel
     #
     protected function _find_by($key, $values, $conditions)
     {
-        $primary_key_flag = ($key === $this->properties['primary_key']);
+        $primary_key_flag = ($key === $this->properties['primary_key'] AND count($values) === 1);
         $result = FALSE;
 
         if (count($values) === 1)

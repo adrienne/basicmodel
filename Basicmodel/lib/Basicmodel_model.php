@@ -9,7 +9,81 @@
 
 class Basicmodel_model extends Basicmodel
 {
+
+    # Contains `key => value` pairs for model's attributes
+    public $attributes = array();
+
+    # Contains an array of model's property names
+    public $properties = array();
     
+    # public __construct();
+    # ---------------------
+    #
+    # If attributes are passed, sets them as model properties
+    #
+    public function __construct($attributes = array())
+    {
+        parent::__construct();
+
+        if (!empty($attributes))
+        {
+            $this->set($attributes);
+        }
+    }
+
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    # Setter and getter
+    # =============================================================================
+
+
+    # public set();
+    # -------------
+    #
+    # Accepts either two arguments as strings, or one argument as array.
+    #
+    #     $mymodel->set('title', 'My awesome model');
+    #
+    # Or:
+    #
+    #     $mymodel->set(array('title' => 'My awesome model', 'type' => 'wicked'));
+    #
+    public function set($arg1, $arg2 = '')
+    {
+        if (is_array($arg1))
+        {
+            foreach($arg1 as $key => $value)
+            {
+                $this->set($key, $value);
+            }
+        }
+
+        else
+        {
+            $this->attributes[$arg1] = $arg2;
+        }
+
+        return $this;
+    }
+
+    # public get();
+    # -------------
+    #
+    # Returns an attribute from the attributes list.
+    #
+    public function get($attribute_key)
+    {
+        return $this->attributes[$attribute_key];
+    }
+
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    # Public query methods
+    # =============================================================================
+
+
     # public save();
     # --------------
     #
@@ -35,22 +109,25 @@ class Basicmodel_model extends Basicmodel
     
     
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    # Private query methods
+    # =============================================================================
     
     
-    # private _save();
+    # protected _save();
     # ----------------
     #
     # Attempts to save the model to the database. If succeeds, returns the Basicmodel_model
     # object with newly set ID, otherwise triggers PHP error.
     #
-    private function _save()
+    protected function _save()
     {
-        $query_success = $this->db->insert($this->get_property('table_name'), $this);
+        $query_success = $this->db->insert($this->properties['table_name'], $this->attributes);
         
         if ($query_success)
         {
-            $primary_key = $this->get_property('primary_key');
-            $this->$primary_key = $this->db->insert_id();
+            $primary_key = $this->properties['primary_key'];
+            $this->attributes[$primary_key] = $this->db->insert_id();
         }
         
         else
@@ -63,13 +140,16 @@ class Basicmodel_model extends Basicmodel
 
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    #
+    # Public utility methods
+    # =============================================================================
 
 
     public function to_array()
     {
         $out = array();
 
-        foreach ($this->get_property('attributes') as $property)
+        foreach ($this->properties['attributes'] as $property)
         {
             $out[$property] = null;
         }

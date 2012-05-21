@@ -26,13 +26,13 @@
 # Or, in your controller:
 #
 #     $this->load->model('mymodel_model', 'mymodel');
-#     $mymodels = $this->mymodel->all();
+#     $collection = $this->mymodel->all();
 #
-#     $this->load->view('myview', array('models' => $mymodels))
+#     $this->load->view('myview', array('collection' => $mymodels))
 #
 # And then in your view:
 #
-#     foreach($models as $model):
+#     foreach($collection->models as $model):
 #        echo $model->get('name');
 #     endforeach;
 #
