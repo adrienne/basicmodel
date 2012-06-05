@@ -104,7 +104,42 @@ class Basicmodel_model extends Basicmodel
     #
     public function is_new()
     {
+        if ($this->get($this->properties['primary_key']))
+        {
+            return false;
+        }
+
         return true;
+    }
+
+    # public update_attributes();
+    # ---------------------------
+    #
+    # Returns `true` if attributes updated successfully, otherwise returns `false`.
+    #
+    public function update_attributes($attributes = array())
+    {
+        if ( ! $this->is_new() AND ! empty($attributes))
+        {
+            foreach($attributes as $key => $value)
+            {
+                if ( ! in_array($key, $this->properties['attributes']))
+                {
+                    // trigger_error($key.' is not a valid column.');
+                    return false;
+                }
+            }
+
+            $query_success = $this->db->update($this->properties['table_name'], $attributes, array($this->properties['primary_key'] => $this->get($this->properties['primary_key'])));
+            
+            if ($query_success)
+            {
+                $this->atributes = array_merge($this->attributes, $attributes);
+                return $this;
+            }
+        }
+
+        return false;
     }
     
     
