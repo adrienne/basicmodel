@@ -134,7 +134,7 @@ class Basicmodel_model extends Basicmodel
             
             if ($query_success)
             {
-                $this->atributes = array_merge($this->attributes, $attributes);
+                $this->attributes = array_merge($this->attributes, $attributes);
                 return $this;
             }
         }
