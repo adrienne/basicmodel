@@ -87,6 +87,11 @@ class Basicmodel extends CI_Model
             $func = $this->$method;
             return call_user_func_array($func, $args);
         }
+
+        else
+        {
+            trigger_error('Method '.$method.' was not found');
+        }
     }
     
 }

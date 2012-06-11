@@ -292,6 +292,27 @@ class Basicmodel_base extends Basicmodel
         return $this->_make_many($models);
     }
 
+    # public delete();
+    # ----------------
+    #
+    # Deletes model(-s) by ID
+    #
+    public function delete($id)
+    {
+        if (is_array($id))
+        {
+            $this->db->where_in($this->properties['primary_key'], $id);
+        }
+
+        else
+        {
+            $this->db->where($this->properties['primary_key'], $id);
+        }
+
+        $this->db->delete($this->properties['table_name']);
+
+        return $this;
+    }
 
     # public find();
     # --------------
