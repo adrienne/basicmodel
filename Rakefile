@@ -1,4 +1,5 @@
-desc "builds docco documentation"
+desc 'builds documentation'
 task :docs do
-  system 'docco Basicmodel/*.php Basicmodel/*/*.php'
+  system 'rm -rf docs/*'
+  system 'phpdoc -d Basicmodel/ -t docs/'
 end

@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project version="2.0.0a6" title="">
+  <file path="Basicmodel.php" hash="2e4f7a0ae57572f8781b265d4f6e41a5" package="Default">
+    <include line="72" type="Require Once" package="Default">
+      <name/>
+    </include>
+    <include line="73" type="Require Once" package="Default">
+      <name/>
+    </include>
+    <include line="74" type="Require Once" package="Default">
+      <name/>
+    </include>
+    <class final="false" abstract="false" namespace="" line="64" package="Default">
+      <extends>CI_Model</extends>
+      <name>Basicmodel</name>
+      <full_name>\Basicmodel</full_name>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="68" package="Default">
+        <name>__construct</name>
+        <full_name>__construct</full_name>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="84" package="Default">
+        <name>__call</name>
+        <full_name>__call</full_name>
+        <argument line="84">
+          <name>$method</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="84">
+          <name>$args</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="64" code="50000">No DocBlock was found for \Basicmodel</error>
+      <error line="68" code="50010">No DocBlock was found for method __construct()</error>
+      <error line="84" code="50010">No DocBlock was found for method __call()</error>
+    </parse_markers>
+  </file>
+  <file path="lib/Basicmodel_base.php" hash="e5697349a855a024595989fffa743b2e" package="Default">
+    <class final="false" abstract="false" namespace="" line="12" package="Default">
+      <extends>Basicmodel</extends>
+      <name>Basicmodel_base</name>
+      <full_name>\Basicmodel_base</full_name>
+      <property final="false" static="false" visibility="protected" line="16" namespace="" package="Default">
+        <name>$attributes</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="19" namespace="" package="Default">
+        <name>$properties</name>
+        <default><![CDATA[]]></default>
+      </property>
+      <property final="false" static="false" visibility="protected" line="22" namespace="" package="Default">
+        <name>$overrides</name>
+        <default><![CDATA[array()]]></default>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="33" package="Default">
+        <name>__construct</name>
+        <full_name>__construct</full_name>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="58" package="Default">
+        <name>__call</name>
+        <full_name>__call</full_name>
+        <argument line="58">
+          <name>$method</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="58">
+          <name>$args</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="83" package="Default">
+        <name>get_model_properties</name>
+        <full_name>get_model_properties</full_name>
+        <argument line="83">
+          <name>$name</name>
+          <default><![CDATA['']]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="104" package="Default">
+        <name>get_model_attributes</name>
+        <full_name>get_model_attributes</full_name>
+        <argument line="104">
+          <name>$name</name>
+          <default><![CDATA['']]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="126" package="Default">
+        <name>set_table_name</name>
+        <full_name>set_table_name</full_name>
+        <argument line="126">
+          <name>$name</name>
+          <default><![CDATA['']]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="" line="149" package="Default">
+        <name>_get_model_properties</name>
+        <full_name>_get_model_properties</full_name>
+        <argument line="149">
+          <name>$name</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="" line="167" package="Default">
+        <name>_get_model_attributes</name>
+        <full_name>_get_model_attributes</full_name>
+        <argument line="167">
+          <name>$name</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="" line="187" package="Default">
+        <name>_make_db_name</name>
+        <full_name>_make_db_name</full_name>
+        <argument line="187">
+          <name>$name</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="" line="203" package="Default">
+        <name>_clean_model_name</name>
+        <full_name>_clean_model_name</full_name>
+        <argument line="203">
+          <name>$name</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="" line="213" package="Default">
+        <name>_get_plural</name>
+        <full_name>_get_plural</full_name>
+        <argument line="213">
+          <name>$word</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="" line="236" package="Default">
+        <name>_get_table_struct</name>
+        <full_name>_get_table_struct</full_name>
+        <argument line="236">
+          <name>$table</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="" line="255" package="Default">
+        <name>_get_primary_key</name>
+        <full_name>_get_primary_key</full_name>
+        <argument line="255">
+          <name>$columns</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="280" package="Default">
+        <name>make</name>
+        <full_name>make</full_name>
+        <argument line="280">
+          <name>$attributes</name>
+          <default><![CDATA[array()]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="290" package="Default">
+        <name>make_many</name>
+        <full_name>make_many</full_name>
+        <argument line="290">
+          <name>$models</name>
+          <default><![CDATA[array()]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="300" package="Default">
+        <name>delete</name>
+        <full_name>delete</full_name>
+        <argument line="300">
+          <name>$id</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="325" package="Default">
+        <name>find</name>
+        <full_name>find</full_name>
+        <argument line="325">
+          <name>$values</name>
+          <default><![CDATA[array()]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="343" package="Default">
+        <name>find_by</name>
+        <full_name>find_by</full_name>
+        <argument line="343">
+          <name>$key</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="343">
+          <name>$values</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="343">
+          <name>$conditions</name>
+          <default><![CDATA[array()]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="" line="365" package="Default">
+        <name>_prepare_model</name>
+        <full_name>_prepare_model</full_name>
+        <argument line="365">
+          <name>$submitted_attributes</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="" line="391" package="Default">
+        <name>_prepare_find_array</name>
+        <full_name>_prepare_find_array</full_name>
+        <argument line="391">
+          <name>$keys</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="" line="406" package="Default">
+        <name>_clean_attributes</name>
+        <full_name>_clean_attributes</full_name>
+        <argument line="406">
+          <name>$submitted_attributes</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="" line="438" package="Default">
+        <name>_make</name>
+        <full_name>_make</full_name>
+        <argument line="438">
+          <name>$attributes</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="" line="448" package="Default">
+        <name>_make_many</name>
+        <full_name>_make_many</full_name>
+        <argument line="448">
+          <name>$models</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="" line="467" package="Default">
+        <name>_find_by</name>
+        <full_name>_find_by</full_name>
+        <argument line="467">
+          <name>$key</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="467">
+          <name>$values</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="467">
+          <name>$conditions</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="12" code="50000">No DocBlock was found for \Basicmodel_base</error>
+      <error line="16" code="50018">No DocBlock was found for property $attributes</error>
+      <error line="19" code="50018">No DocBlock was found for property $properties</error>
+      <error line="22" code="50018">No DocBlock was found for property $overrides</error>
+      <error line="33" code="50010">No DocBlock was found for method __construct()</error>
+      <error line="58" code="50010">No DocBlock was found for method __call()</error>
+      <error line="83" code="50010">No DocBlock was found for method get_model_properties()</error>
+      <error line="104" code="50010">No DocBlock was found for method get_model_attributes()</error>
+      <error line="126" code="50010">No DocBlock was found for method set_table_name()</error>
+      <error line="149" code="50010">No DocBlock was found for method _get_model_properties()</error>
+      <error line="167" code="50010">No DocBlock was found for method _get_model_attributes()</error>
+      <error line="187" code="50010">No DocBlock was found for method _make_db_name()</error>
+      <error line="203" code="50010">No DocBlock was found for method _clean_model_name()</error>
+      <error line="213" code="50010">No DocBlock was found for method _get_plural()</error>
+      <error line="236" code="50010">No DocBlock was found for method _get_table_struct()</error>
+      <error line="255" code="50010">No DocBlock was found for method _get_primary_key()</error>
+      <error line="280" code="50010">No DocBlock was found for method make()</error>
+      <error line="290" code="50010">No DocBlock was found for method make_many()</error>
+      <error line="300" code="50010">No DocBlock was found for method delete()</error>
+      <error line="325" code="50010">No DocBlock was found for method find()</error>
+      <error line="343" code="50010">No DocBlock was found for method find_by()</error>
+      <error line="365" code="50010">No DocBlock was found for method _prepare_model()</error>
+      <error line="391" code="50010">No DocBlock was found for method _prepare_find_array()</error>
+      <error line="406" code="50010">No DocBlock was found for method _clean_attributes()</error>
+      <error line="438" code="50010">No DocBlock was found for method _make()</error>
+      <error line="448" code="50010">No DocBlock was found for method _make_many()</error>
+      <error line="467" code="50010">No DocBlock was found for method _find_by()</error>
+    </parse_markers>
+  </file>
+  <file path="lib/Basicmodel_collection.php" hash="ffb5ec4f4d3bdb54f371939d8e9e95c9" package="Default">
+    <class final="false" abstract="false" namespace="" line="8" package="Default">
+      <extends>Basicmodel</extends>
+      <name>Basicmodel_collection</name>
+      <full_name>\Basicmodel_collection</full_name>
+      <property final="false" static="false" visibility="public" line="12" namespace="" package="Default">
+        <name>$models</name>
+        <default><![CDATA[array()]]></default>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="19" package="Default">
+        <name>__construct</name>
+        <full_name>__construct</full_name>
+        <argument line="19">
+          <name>$models</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="37" package="Default">
+        <name>to_array</name>
+        <full_name>to_array</full_name>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="54" package="Default">
+        <name>to_json</name>
+        <full_name>to_json</full_name>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="8" code="50000">No DocBlock was found for \Basicmodel_collection</error>
+      <error line="12" code="50018">No DocBlock was found for property $models</error>
+      <error line="19" code="50010">No DocBlock was found for method __construct()</error>
+      <error line="37" code="50010">No DocBlock was found for method to_array()</error>
+      <error line="54" code="50010">No DocBlock was found for method to_json()</error>
+    </parse_markers>
+  </file>
+  <file path="lib/Basicmodel_model.php" hash="96ef2e535a89f74b967c4f64e12f5e8f" package="Default">
+    <class final="false" abstract="false" namespace="" line="10" package="Default">
+      <extends>Basicmodel</extends>
+      <name>Basicmodel_model</name>
+      <full_name>\Basicmodel_model</full_name>
+      <property final="false" static="false" visibility="public" line="14" namespace="" package="Default">
+        <name>$attributes</name>
+        <default><![CDATA[array()]]></default>
+      </property>
+      <property final="false" static="false" visibility="public" line="17" namespace="" package="Default">
+        <name>$properties</name>
+        <default><![CDATA[array()]]></default>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="24" package="Default">
+        <name>__construct</name>
+        <full_name>__construct</full_name>
+        <argument line="24">
+          <name>$attributes</name>
+          <default><![CDATA[array()]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="52" package="Default">
+        <name>set</name>
+        <full_name>set</full_name>
+        <argument line="52">
+          <name>$arg1</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="52">
+          <name>$arg2</name>
+          <default><![CDATA['']]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="75" package="Default">
+        <name>get</name>
+        <full_name>get</full_name>
+        <argument line="75">
+          <name>$attribute_key</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="92" package="Default">
+        <name>save</name>
+        <full_name>save</full_name>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="105" package="Default">
+        <name>is_new</name>
+        <full_name>is_new</full_name>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="120" package="Default">
+        <name>update_attributes</name>
+        <full_name>update_attributes</full_name>
+        <argument line="120">
+          <name>$attributes</name>
+          <default><![CDATA[array()]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="protected" namespace="" line="158" package="Default">
+        <name>_save</name>
+        <full_name>_save</full_name>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="189" package="Default">
+        <name>to_array</name>
+        <full_name>to_array</full_name>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="214" package="Default">
+        <name>to_json</name>
+        <full_name>to_json</full_name>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="10" code="50000">No DocBlock was found for \Basicmodel_model</error>
+      <error line="14" code="50018">No DocBlock was found for property $attributes</error>
+      <error line="17" code="50018">No DocBlock was found for property $properties</error>
+      <error line="24" code="50010">No DocBlock was found for method __construct()</error>
+      <error line="52" code="50010">No DocBlock was found for method set()</error>
+      <error line="75" code="50010">No DocBlock was found for method get()</error>
+      <error line="92" code="50010">No DocBlock was found for method save()</error>
+      <error line="105" code="50010">No DocBlock was found for method is_new()</error>
+      <error line="120" code="50010">No DocBlock was found for method update_attributes()</error>
+      <error line="158" code="50010">No DocBlock was found for method _save()</error>
+      <error line="189" code="50010">No DocBlock was found for method to_array()</error>
+      <error line="214" code="50010">No DocBlock was found for method to_json()</error>
+    </parse_markers>
+  </file>
+  <package name="Default" full_name="Default"/>
+  <namespace name="" full_name=""/>
+  <marker count="0">todo</marker>
+  <marker count="0">fixme</marker>
+  <deprecated count="0"/>
+</project>
