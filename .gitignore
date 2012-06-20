@@ -1,4 +1,5 @@
 .DS_Store
+docs
 
 ci/*/logs/log-*.php
 ci/*/logs/!index.html
