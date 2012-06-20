@@ -6,6 +6,3 @@ ci/*/logs/!index.html
 
 ci/*/cache/*
 ci/*/cache/!index.html
-
-ci/*/config/testing/database.php
-ci/*/config/testing/config.php
