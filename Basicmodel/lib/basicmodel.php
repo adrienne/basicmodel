@@ -46,7 +46,7 @@ class Basicmodel
      */
     public function __get($key)
     {
-        if ($key === "CI") return static::$CI->$key;
+        if ($key === "CI") return static::$CI;
 
         // Return own property
     }
