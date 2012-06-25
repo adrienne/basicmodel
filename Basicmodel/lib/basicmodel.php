@@ -17,11 +17,18 @@ class Basicmodel
 {
 
     /**
-     * An instance of CodeIgniter
+     * Change primary key column
      * 
-     * @var object
+     * @var string
      */
-    public static $CI;
+    public static $key = 'id';
+
+    /**
+     * Change table name
+     * 
+     * @var [type]
+     */
+    public static $table;
 
     /**
      * Contains model's attributes
@@ -45,17 +52,9 @@ class Basicmodel
      */
     public function __construct($attributes = array())
     {
-        if (empty(static::$CI))
+        foreach($attributes as $key => $value)
         {
-            static::$CI =& get_instance();
-        }
-
-        if ( ! empty($attributes))
-        {
-            foreach($attributes as $key => $value)
-            {
-                $this->$key = $value;
-            }
+            $this->$key = $value;
         }
     }
 
@@ -69,7 +68,7 @@ class Basicmodel
     {
         if ($key === "CI")
         {
-            return static::$CI;
+            return static::CI();
         }
 
         else
@@ -90,6 +89,16 @@ class Basicmodel
     }
 
     /**
+     * Returns CI instance
+     *
+     * @return object CI object
+     */
+    public static function CI()
+    {
+        return get_instance();
+    }
+
+    /**
      * Persists the model to the DB and returns the Basicmodel instance with the new ID.
      *
      * @todo   Save the model (sets the ID)
@@ -100,7 +109,37 @@ class Basicmodel
     public static function create($attributes)
     {
         $model = new static($attributes);
-        return $model;
+        $success = $model->save();
+        return $success ? $model : false;
+    }
+
+    /**
+     * Persists the model to the database
+     *
+     * @todo   If model is new, insert, otherwise update
+     * @return bool `TRUE` if model persisted, `FALSE` otherwise
+     */
+    public function save()
+    {
+        $this->CI->db->insert($this->table(), $this->attributes);
+        $success = $this->CI->db->affected_rows() > 0;
+
+        if ($success)
+        {
+            $this->{static::$key} = $this->CI->db->insert_id();
+        }
+
+        return $success;
+    }
+
+    /**
+     * Gets table name
+     * 
+     * @return string
+     */
+    public function table()
+    {
+        return empty(static::$table) ? strtolower(get_class($this)).'s' : static::$table;
     }
 
 }
