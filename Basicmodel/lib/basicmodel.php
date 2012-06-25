@@ -4,6 +4,7 @@
  * @package   Basicmodel
  * @author    Mindaugas Bujanauskas <bujanauskas.m@gmail.com>
  * @copyright (c) 2012 Mindaugas Bujanauskas
+ * @license   http://www.opensource.org/licenses/mit-license.php/ MIT
  */
 
 /**
@@ -84,15 +85,15 @@ class Basicmodel
 
     /**
      * Persists the model to the DB and returns the Basicmodel instance with the new ID.
-     * 
+     *
+     * @todo   Save the model (sets the ID)
+     * @todo   Return false on unsuccessful save
      * @param  array $attributes Key value pairs of attributes to be saved in the database
      * @return Basicmodel|bool
      */
     public static function create($attributes)
     {
         $model = new static($attributes);
-        // Save the model (sets the ID)
-        // Return a model or false
         return $model;
     }
 
