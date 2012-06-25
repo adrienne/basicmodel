@@ -60,3 +60,10 @@ Development
 * Testing: [PHPUnit](http://www.phpunit.de/) via [CIUnit](https://bitbucket.org/kenjis/my-ciunit/)
 * Documentation: [ApiGen](http://apigen.org/)
 * Building: [Rake](http://rake.rubyforge.org/)
+
+Style
+--------------------------------
+
+* General guideline: [CodeIgniter's Style Guide](http://codeigniter.com/user_guide/general/styleguide.html)
+* Indentation: 4 spaces
+* Gutter: 90 spaces
