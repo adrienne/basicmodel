@@ -13,10 +13,7 @@ Usage
 Create your model by extending `Basicmodel`:
 
 	// application/models/user.php
-	class User extends Basicmodel
-	{
-	
-	}
+	class User extends Basicmodel { }
 
 And now you can use it in your controllers like so:
 	
