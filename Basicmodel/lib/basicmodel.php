@@ -67,10 +67,15 @@ class Basicmodel
      */
     public function __get($key)
     {
-        if ($key === "CI") return static::$CI;
-        else return $this->attributes[$key];
+        if ($key === "CI")
+        {
+            return static::$CI;
+        }
 
-        // Return own property
+        else
+        {
+            return $this->attributes[$key];
+        }
     }
 
     /**
