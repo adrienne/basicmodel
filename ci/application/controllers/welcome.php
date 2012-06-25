@@ -20,7 +20,13 @@ class Welcome extends CI_Controller {
 	public function index()
 	{
 		$this->load->model('user');
-		$output = $this->db;
+
+		$user = User::create(array(
+			'name' => 'Mindaugas Bujanauskas',
+			'email' => 'mindaugas@example.com'
+		));
+
+		$output = array($user, $user->name, $user->email);
 
 		$output = empty($output) ? null : $output;
 		$data = array('basicmodel' => $output);
