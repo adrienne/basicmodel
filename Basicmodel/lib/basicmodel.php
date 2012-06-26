@@ -101,8 +101,6 @@ class Basicmodel
     /**
      * Persists the model to the DB and returns the Basicmodel instance with the new ID.
      *
-     * @todo   Save the model (sets the ID)
-     * @todo   Return false on unsuccessful save
      * @param  array $attributes Key value pairs of attributes to be saved in the database
      * @return Basicmodel|bool
      */
@@ -117,7 +115,7 @@ class Basicmodel
      * Persists the model to the database
      *
      * @todo   If model is new, insert, otherwise update
-     * @return bool `TRUE` if model persisted, `FALSE` otherwise
+     * @return bool INSERT/UPDATE success
      */
     public function save()
     {
@@ -134,7 +132,8 @@ class Basicmodel
 
     /**
      * Gets table name
-     * 
+     *
+     * @todo   Use inflector
      * @return string
      */
     public function table()
