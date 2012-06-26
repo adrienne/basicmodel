@@ -142,4 +142,17 @@ class Basicmodel
         return empty(static::$table) ? strtolower(get_class($this)).'s' : static::$table;
     }
 
+    /**
+     * Determines whether this model exists in the database
+     *
+     * This is done by checking for PK's value. If the value is set, this means that the
+     * model exists in the database.
+     * 
+     * @return boolean
+     */
+    public function is_new()
+    {
+        return empty($this->attributes[static::$key]);
+    }
+
 }
