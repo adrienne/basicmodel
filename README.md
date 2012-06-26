@@ -5,7 +5,9 @@ Basicmodel is a new base for your CodeIgniter models. Built using CodeIgniter's 
 
 In short, Basicmodel takes care of writing casual CRUD operations for your models. It figures out the table name, primary key, column names, etc. and extends your models with some basic functionality, that should've been there from the begining.
 
+
 * * *
+
 
 Usage
 --------------------------------
@@ -51,6 +53,7 @@ And in your view:
 		<?= mailto($user->email, $user->name) ?>
 	</div>
 
+
 Development
 --------------------------------
 
@@ -58,9 +61,16 @@ Development
 * Documentation: [ApiGen](http://apigen.org/)
 * Building: [Rake](http://rake.rubyforge.org/)
 
+
+Preparation
+--------------------------------
+
+Before starting the development application, you need to create two databases: `basicmodel_development` and `basicmodel_testing`. Once you have them, direct your browser towards your Basicmodel application migrations URL; on my development machine it is <http://basicmodel/index.php/migrations>.
+
+
 Style
 --------------------------------
 
-* General guideline: [CodeIgniter's Style Guide](http://codeigniter.com/user_guide/general/styleguide.html)
+* General guidelines: [CodeIgniter's Style Guide](http://codeigniter.com/user_guide/general/styleguide.html)
 * Indentation: 4 spaces
 * Gutter: 90 spaces

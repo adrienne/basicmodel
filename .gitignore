@@ -1,8 +1,2 @@
 .DS_Store
 docs
-
-ci/*/logs/log-*.php
-ci/*/logs/!index.html
-
-ci/*/cache/*
-ci/*/cache/!index.html
