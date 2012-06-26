@@ -33,7 +33,7 @@ class BasicmodelTest extends CIUnit_TestCase
         $this->assertTrue($this->model->is_new(), 'When key not set, should be TRUE');
 
         $this->model->{Basicmodel::$key} = 10;
-        $this->assertFalse($this->model->is_new(), 'When key not set, should be FALSE');
+        $this->assertFalse($this->model->is_new(), 'When key is set, should be FALSE');
     }
     
 }
