@@ -65,7 +65,7 @@ Development
 Preparation
 --------------------------------
 
-Before starting the development application, you need to create two databases: `basicmodel_development` and `basicmodel_testing`. Once you have them, direct your browser towards your Basicmodel application migrations URL; on my development machine it is <http://basicmodel/index.php/migrations>.
+Before starting the development application, you need to create two databases: `basicmodel_development` and `basicmodel_test`. Once you have them, direct your browser towards your Basicmodel application migrations URL; on my development machine it is <http://basicmodel/index.php/migrations>.
 
 
 Style
