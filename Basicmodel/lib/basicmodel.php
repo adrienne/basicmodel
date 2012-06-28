@@ -122,7 +122,7 @@ class Basicmodel
         $this->CI->db->insert($this->table(), $this->attributes);
         $success = $this->CI->db->affected_rows() > 0;
 
-        if ($success)
+        if ($success && $this->is_new())
         {
             $this->{static::$key} = $this->CI->db->insert_id();
         }
