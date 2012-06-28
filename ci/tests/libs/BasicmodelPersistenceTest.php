@@ -54,5 +54,23 @@ class BasicmodelPersistenceTest extends CIUnit_TestCase
     {
         
     }
+
+    /**
+     * Static mehod `create()` should save the model in the DB
+     */
+    public function testStaticCreateSavesModel()
+    {
+        $model = User::create($this->attributes);
+        $this->assertInstanceOf('User', $model);
+
+        $query = $this->CI->db->last_query();
+        $this->assertStringStartsWith('INSERT INTO `users`', $query);
+
+        $count = $this->CI->db->count_all('users');
+        $this->assertEquals(1, $count);
+
+        $id = $this->CI->db->insert_id();
+        $this->assertEquals($id, $model->id);
+    }
     
 }
