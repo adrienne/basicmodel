@@ -1,10 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * Creates development and testing databases
- *
- * Since this is the first migrations, we'll just assume that sometimes the database might
- * be already there and make a check before continuing with migrations.
+ * Creates `users` table
  */
 class Migration_Create_users_table extends CI_Migration {
 
