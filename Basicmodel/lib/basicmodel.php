@@ -131,6 +131,25 @@ class Basicmodel
     }
 
     /**
+     * Updates model in the database
+     * 
+     * @param  array $attributes New attributes to set
+     * @return bool
+     */
+    public function update($attributes = array())
+    {
+        foreach ($attributes as $key => $value)
+        {
+            $this->$key = $value;
+        }
+
+        $this->CI->db->where(static::$key, $this->get_key());
+        $this->CI->db->update($this->table(), $this->attributes);
+
+        return $this->CI->db->affected_rows() > 0;
+    }
+
+    /**
      * Gets table name
      *
      * @todo   Use inflector
@@ -152,6 +171,16 @@ class Basicmodel
     public function is_new()
     {
         return empty($this->attributes[static::$key]);
+    }
+
+    /**
+     * Returns PK's value
+     * 
+     * @return mixed
+     */
+    public function get_key()
+    {
+        return $this->{static::$key};
     }
 
 }
