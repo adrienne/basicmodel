@@ -113,18 +113,25 @@ class Basicmodel
 
     /**
      * Persists the model to the database
-     *
-     * @todo   If model is new, insert, otherwise update
+     * 
      * @return bool INSERT/UPDATE success
      */
     public function save()
     {
-        $this->CI->db->insert($this->table(), $this->attributes);
-        $success = $this->CI->db->affected_rows() > 0;
-
-        if ($success && $this->is_new())
+        if ($this->is_new())
         {
-            $this->set_key($this->CI->db->insert_id());
+            $this->CI->db->insert($this->table(), $this->attributes);
+            $success = $this->CI->db->affected_rows() > 0;
+
+            if ($success)
+            {
+                $this->set_key($this->CI->db->insert_id());
+            }
+        }
+
+        else
+        {
+            $success = $this->update();
         }
 
         return $success;
