@@ -124,7 +124,7 @@ class Basicmodel
 
         if ($success && $this->is_new())
         {
-            $this->{static::$key} = $this->CI->db->insert_id();
+            $this->set_key($this->CI->db->insert_id());
         }
 
         return $success;
@@ -181,6 +181,14 @@ class Basicmodel
     public function get_key()
     {
         return $this->{static::$key};
+    }
+
+    /**
+     * Sets value for PK
+     */
+    public function set_key($value)
+    {
+        $this->{static::$key} = $value;
     }
 
 }
