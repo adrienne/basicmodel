@@ -52,10 +52,7 @@ class Basicmodel
      */
     public function __construct($attributes = array())
     {
-        foreach($attributes as $key => $value)
-        {
-            $this->$key = $value;
-        }
+        $this->fill($attributes);
     }
 
     /**
@@ -99,6 +96,32 @@ class Basicmodel
     }
 
     /**
+     * Find a model by PK
+     *
+     * If model exists, returns a new instance, otherwise, returns `false`.
+     * 
+     * @param  mixed $id
+     * @return object|bool
+     */
+    public static function find($id)
+    {
+        $model = new static();
+
+        static::CI()->db->where(static::$key, $id);
+        $q = static::CI()->db->get($model->table());
+
+        if ($q->num_rows() > 0)
+        {
+            $r = $q->row_array();
+            $model->fill($r);
+
+            return $model;
+        }
+
+        return FALSE;
+    }
+
+    /**
      * Persists the model to the DB and returns the Basicmodel instance with the new ID.
      *
      * @param  array $attributes Key value pairs of attributes to be saved in the database
@@ -109,6 +132,19 @@ class Basicmodel
         $model = new static($attributes);
         $success = $model->save();
         return $success ? $model : false;
+    }
+
+    /**
+     * Takes an array of attributes and fills the model with them
+     * 
+     * @param  array $attributes
+     */
+    public function fill($attributes)
+    {
+        foreach($attributes as $key => $value)
+        {
+            $this->$key = $value;
+        }
     }
 
     /**
