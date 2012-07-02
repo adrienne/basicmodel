@@ -1,0 +1,15 @@
+1:
+    id: 1
+    name: Mindaugas Bujanauskas
+    email: mindaugas@example.com
+
+2:
+    id: 2
+    name: John Doe
+    email: johndoe@example.com
+
+3:
+    id: 3
+    name: Jane Roe
+    email: roe@example.com
+

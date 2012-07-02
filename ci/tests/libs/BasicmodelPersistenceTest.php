@@ -18,6 +18,10 @@ class BasicmodelPersistenceTest extends CIUnit_TestCase
             'name' => 'Mindaugas Bujanauskas',
             'email' => 'mindaugas@example.com'
         );
+
+        $this->dbfixt('users');
+
+        $this->total = $this->CI->db->count_all('users');
     }
 
     /**
@@ -35,13 +39,13 @@ class BasicmodelPersistenceTest extends CIUnit_TestCase
     public function testNewModelSave()
     {
         $model = new User($this->attributes);
-        $model->save();
+        $this->assertTrue($model->save());
 
         $query = $this->CI->db->last_query();
         $this->assertStringStartsWith('INSERT INTO `users`', $query);
 
         $count = $this->CI->db->count_all('users');
-        $this->assertEquals(1, $count);
+        $this->assertEquals($this->total + 1, $count);
 
         $id = $this->CI->db->insert_id();
         $this->assertEquals($id, $model->id);
@@ -52,7 +56,17 @@ class BasicmodelPersistenceTest extends CIUnit_TestCase
      */
     public function testOldModelSave()
     {
-        
+        $user = User::find(2);
+        $user->name = $this->attributes['name'];
+        $user->email = $this->attributes['email'];
+
+        $this->assertTrue($user->save());
+
+        $query = $this->CI->db->last_query();
+        $this->assertStringStartsWith('UPDATE `users` SET', $query);
+
+        $count = $this->CI->db->count_all('users');
+        $this->assertEquals($this->total, $count);
     }
 
     /**
@@ -67,10 +81,18 @@ class BasicmodelPersistenceTest extends CIUnit_TestCase
         $this->assertStringStartsWith('INSERT INTO `users`', $query);
 
         $count = $this->CI->db->count_all('users');
-        $this->assertEquals(1, $count);
+        $this->assertEquals($this->total + 1, $count);
 
         $id = $this->CI->db->insert_id();
         $this->assertEquals($id, $model->id);
+    }
+
+    /**
+     * Static method `create()` should return `false` if the model was not saved
+     */
+    public function testStaticCreateReturnsFalse()
+    {
+        $this->assertFalse(User::create(array_merge($this->attributes, array('id' => 1))));
     }
     
 }
