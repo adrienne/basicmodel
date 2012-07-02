@@ -88,11 +88,33 @@ class BasicmodelPersistenceTest extends CIUnit_TestCase
     }
 
     /**
-     * Static method `create()` should return `false` if the model was not saved
+     * Static method `create()` should return `FALSE` if the model was not saved
      */
     public function testStaticCreateReturnsFalse()
     {
         $this->assertFalse(User::create(array_merge($this->attributes, array('id' => 1))));
+    }
+
+    /**
+     * Instande method `update()` should return `TRUE` on successfull update
+     * @return [type] [description]
+     */
+    public function testUpdateSuccess()
+    {
+        $model = User::find(2);
+        $this->assertTrue($model->update($this->attributes));
+    }
+
+    /**
+     * Instace method `update()` should run the correct query
+     */
+    public function testUpdateQuery()
+    {
+        $model = User::find(2);
+        $model->update($this->attributes);
+
+        $query = $this->CI->db->last_query();
+        $this->assertStringStartsWith("UPDATE `users` SET `id` = '2'", $query);
     }
     
 }
