@@ -8,6 +8,17 @@
  * @license   http://www.opensource.org/licenses/mit-license.php/ MIT
  */
 
-// Load Basicmodel files
-require_once('lib/basicmodel.php');
-require_once('lib/utilities.php');
+/**
+ * Basicmodel Utilities Class
+ *
+ * @package Basicmodel
+ */
+class BMU
+{
+
+    public static function starts_with($needle, $haystack)
+    {
+        return strpos($haystack, $needle) === 0;
+    }
+
+}

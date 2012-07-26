@@ -86,6 +86,24 @@ class Basicmodel
     }
 
     /**
+     * Calls `find_by` static method with parameters guessed from the method name.
+     * 
+     * @param  string $method
+     * @param  array  $arguments
+     * @return mixed             Anything that an existing function returns
+     */
+    public static function __callStatic($method, $arguments)
+    {
+        if (BMU::starts_with('find_by_', $method))
+        {
+            $name = str_replace('find_by_', '', $method);
+            return static::find_by($name, $arguments[0]);
+        }
+
+        show_error('No such static method <code>'.$method.'</code>');
+    }
+
+    /**
      * Returns CI instance
      *
      * @return object CI object

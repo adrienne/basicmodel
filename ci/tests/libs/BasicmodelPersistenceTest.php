@@ -97,7 +97,6 @@ class BasicmodelPersistenceTest extends CIUnit_TestCase
 
     /**
      * Instande method `update()` should return `TRUE` on successfull update
-     * @return [type] [description]
      */
     public function testUpdateSuccess()
     {
