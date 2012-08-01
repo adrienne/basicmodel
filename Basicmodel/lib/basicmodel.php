@@ -140,6 +140,28 @@ class Basicmodel
     }
 
     /**
+     * Returns a collection of models found by a certain column in the database
+     *
+     * @param  string $column Which column will be used to search by
+     * @param  mixed  $query  ID, string, any other var type which will be used for query
+     * @return Basicmodel_Collection
+     */
+    public static function find_by($column, $query)
+    {
+        $models = array();
+
+        static::CI()->db->where($column, $query);
+        $q = static::CI()->db->get(static::table_name());
+
+        if ($q->num_rows() > 0)
+        {
+            $models = $q->result(get_class());
+        }
+
+        return new Basicmodel_Collection($models);
+    }
+
+    /**
      * Persists the model to the DB and returns the Basicmodel instance with the new ID.
      *
      * @param  array $attributes Key value pairs of attributes to be saved in the database
@@ -217,6 +239,17 @@ class Basicmodel
      * @return string
      */
     public function table()
+    {
+        return static::table_name($this);
+    }
+
+    /**
+     * Infers table name
+     * 
+     * @param  string $object If specified, will be used as class context
+     * @return string         Table name
+     */
+    public static function table_name($object = '')
     {
         return empty(static::$table) ? strtolower(get_class($this)).'s' : static::$table;
     }
