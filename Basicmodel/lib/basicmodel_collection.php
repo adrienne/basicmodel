@@ -8,7 +8,12 @@
  * @license   http://www.opensource.org/licenses/mit-license.php/ MIT
  */
 
-// Load Basicmodel files
-require_once('lib/basicmodel.php');
-require_once('lib/basicmodel_collection.php');
-require_once('lib/utilities.php');
+/**
+ * Basicmodel Collection
+ *
+ * @package Basicmodel
+ */
+class Basicmodel_Collection extends ArrayObject
+{
+    
+}
