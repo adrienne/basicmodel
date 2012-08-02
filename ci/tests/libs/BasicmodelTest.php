@@ -73,10 +73,31 @@ class BasicmodelTest extends CIUnit_TestCase
      */
     public function testTable()
     {
+        Basicmodel::$table = '';
         $this->assertEquals('basicmodels', $this->model->table());
 
         Basicmodel::$table = 'users';
         $this->assertEquals('users', $this->model->table());
+    }
+
+    /**
+     * Static method `table_name()` should behave properly
+     *
+     * - It should return model name in plural, if static `$table` is not set
+     * - It should return static `$table` if it is set
+     */
+    public function testStaticTableName()
+    {
+        Basicmodel::$table = '';
+        $this->assertEquals('basicmodels', Basicmodel::table_name());
+
+        Basicmodel::$table = 'users';
+        $this->assertEquals('users', $this->model->table());
+        Basicmodel::$table = '';
+
+        $this->CI->load->model('user');
+        $user = new User();
+        $this->assertEquals('users', $user->table());
     }
     
 }
