@@ -257,18 +257,18 @@ class Basicmodel
      */
     public function table()
     {
-        return static::table_name($this);
+        return empty(static::$table) ? strtolower(get_class($this)).'s' : static::$table;
     }
 
     /**
      * Infers table name
-     * 
-     * @param  string $object If specified, will be used as class context
-     * @return string         Table name
+     *
+     * @todo   Use inflector
+     * @return string Table name
      */
-    public static function table_name($object = '')
+    public static function table_name()
     {
-        return empty(static::$table) ? strtolower(get_class($this)).'s' : static::$table;
+        return empty(static::$table) ? strtolower(get_class(new static())).'s' : static::$table;
     }
 
     /**
