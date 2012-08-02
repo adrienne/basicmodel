@@ -26,7 +26,7 @@ class Basicmodel
     /**
      * Change table name
      * 
-     * @var [type]
+     * @var string
      */
     public static $table;
 
