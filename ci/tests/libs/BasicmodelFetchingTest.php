@@ -45,11 +45,36 @@ class BasicmodelFetchingTest extends CIUnit_TestCase
     }
 
     /**
-     * Static method `find()` should return false if model not found
+     * Static method `find()` should return `false` if model not found
      */
     public function testModelFindFailure()
     {
         $this->assertFalse(User::find(397));
+    }
+
+    /**
+     * Static method `find()` should return a collection of Users
+     */
+    public function testCollectionFindSuccess()
+    {
+        $users = User::find(array(1, 2, 3));
+
+        $this->assertInstanceOf('Basicmodel_Collection', $users);
+        $this->assertEquals($this->total, count($users));
+
+        $this->assertEquals('Mindaugas Bujanauskas', $users[0]->name);
+        $this->assertEquals('Jane Roe', $users[2]->name);
+    }
+
+    /**
+     * Static method `find()` should return empty collection if no records were found
+     */
+    public function testCollectionFindFailure()
+    {
+        $users = User::find(array(397, 541));
+
+        $this->assertInstanceOf('Basicmodel_Collection', $users);
+        $this->assertEquals(0, count($users));
     }
     
 }

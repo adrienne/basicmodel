@@ -114,26 +114,43 @@ class Basicmodel
     }
 
     /**
-     * Find a model by PK
+     * Find a model(-s) by PK
      *
-     * If model exists, returns a new instance, otherwise, returns `false`.
+     * If model exists, returns a new instance, otherwise, returns `false`. If passed an
+     * array containing primary keys, will return a Basicmodel_Collection.
      * 
-     * @param  mixed $id
-     * @return object|bool
+     * @param  array|string|int $id
+     * @return Basicmodel|Basicmodel_Collection|bool
      */
     public static function find($id)
     {
         $model = new static();
 
-        static::CI()->db->where(static::$key, $id);
-        $q = static::CI()->db->get($model->table());
-
-        if ($q->num_rows() > 0)
+        if (is_array($id))
         {
-            $r = $q->row_array();
-            $model->fill($r);
+            $models = array();
 
-            return $model;
+            static::CI()->db->where_in(static::$key, $id);
+            $q = static::CI()->db->get($model->table());
+
+            if ($q->num_rows() > 0)
+            {
+                $models = $q->result(get_class($model));
+            }
+
+            return new Basicmodel_Collection($models);
+        }
+
+        else
+        {
+            static::CI()->db->where(static::$key, $id);
+            $q = static::CI()->db->get($model->table());
+
+            if ($q->num_rows() > 0)
+            {
+                $model->fill($q->row_array());
+                return $model;
+            }
         }
 
         return FALSE;
