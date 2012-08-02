@@ -16,4 +16,9 @@
 class Basicmodel_Collection extends ArrayObject
 {
     
+    public function is_empty()
+    {
+        return (bool) $this->count() ? FALSE : TRUE;
+    }
+
 }
