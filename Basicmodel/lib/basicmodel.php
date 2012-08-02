@@ -172,7 +172,7 @@ class Basicmodel
 
         if ($q->num_rows() > 0)
         {
-            $models = $q->result(get_class());
+            $models = $q->result(get_class(new static()));
         }
 
         return new Basicmodel_Collection($models);
