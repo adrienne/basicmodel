@@ -11,6 +11,7 @@
 /**
  * Basicmodel Collection
  *
+ * @todo    Test pending
  * @package Basicmodel
  */
 class Basicmodel_Collection extends ArrayObject
@@ -19,6 +20,23 @@ class Basicmodel_Collection extends ArrayObject
     public function is_empty()
     {
         return (bool) $this->count() ? FALSE : TRUE;
+    }
+
+    public function to_array()
+    {
+        $out = array();
+
+        foreach($this as $key => $model)
+        {
+            $out[$key] = $model->to_array();
+        }
+
+        return $out;
+    }
+
+    public function to_json()
+    {
+        return json_encode($this->to_array());
     }
 
 }

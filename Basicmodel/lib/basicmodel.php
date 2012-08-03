@@ -302,4 +302,38 @@ class Basicmodel
         $this->{static::$key} = $value;
     }
 
+    /**
+     * Converts the model into array
+     *
+     * @todo   Test pending
+     * @return array
+     */
+    public function to_array()
+    {
+        $out = array();
+
+        foreach($this->attributes as $key => $attribute)
+        {
+            if ($attribute instanceof Basicmodel_Collection)
+            {
+                $attribute = $attribute->to_array();
+            }
+
+            $out[$key] = $attribute;
+        }
+
+        return $out;
+    }
+
+    /**
+     * Converts the model into JSON object
+     *
+     * @todo   Test pending
+     * @return string
+     */
+    public function to_json()
+    {
+        return json_encode($this->to_array());
+    }
+
 }
